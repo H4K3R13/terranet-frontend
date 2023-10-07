@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import { Container, TextField, Button,Snackbar } from '@mui/material';
-import MuiAlert from '@mui/material/Alert';
-import axios from 'axios';
+import React, { useState } from 'react'
+import { Container, TextField, Button, Snackbar } from '@mui/material'
+import MuiAlert from '@mui/material/Alert'
+import axios from 'axios'
+import { useRouter } from 'next/router'
 
 const Alert = (props) => {
-    return <MuiAlert elevation={6} variant="filled" {...props} />;
-  };
+  return <MuiAlert elevation={6} variant="filled" {...props} />
+}
 
 const CreatePost = () => {
+  const router = useRouter()
   const [postData, setPostData] = useState({
     author: '',
     sponsor_name: '',
@@ -15,53 +17,59 @@ const CreatePost = () => {
     description: '',
     reward: '',
     deadline: '',
-  });
+  })
 
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+  const [snackbarOpen, setSnackbarOpen] = useState(false)
+  const [snackbarMessage, setSnackbarMessage] = useState('')
+  const [snackbarSeverity, setSnackbarSeverity] = useState('success')
 
   const handleCloseSnackbar = () => {
-    setSnackbarOpen(false);
-  };
-
+    setSnackbarOpen(false)
+  }
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
     try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_API}api/post`, postData);
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API}api/post`, postData)
 
       if (response.status === 201) {
-        console.log('Post created successfully:', response.data);
-        setSnackbarMessage('Post created successfully!');
-        setSnackbarSeverity('success');
-        setSnackbarOpen(true);
+        console.log('Post created successfully:', response.data)
+        setSnackbarMessage('Post created successfully!')
+        setSnackbarSeverity('success')
+        setSnackbarOpen(true)
       } else {
-        console.error('Error creating post:', response.statusText);
-        setSnackbarMessage('Error creating post');
-        setSnackbarSeverity('error');
-        setSnackbarOpen(true);
+        console.error('Error creating post:', response.statusText)
+        setSnackbarMessage('Error creating post')
+        setSnackbarSeverity('error')
+        setSnackbarOpen(true)
       }
     } catch (error) {
-      console.error('Error creating post:', error);
-      setSnackbarMessage('Error creating post');
-      setSnackbarSeverity('error');
-      setSnackbarOpen(true);
+      console.error('Error creating post:', error)
+      setSnackbarMessage('Error creating post')
+      setSnackbarSeverity('error')
+      setSnackbarOpen(true)
     }
-  };
+  }
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
+    const { name, value } = event.target
     setPostData({
       ...postData,
       [name]: value,
-    });
-  };
+    })
+  }
+
+  const handleLogout = () => {
+    router.push('/')
+  }
 
   return (
     <Container maxWidth="sm">
       <div>
         <h2>Create a Post</h2>
+        <Button variant="contained" color="primary" onClick={handleLogout}>
+          Logout
+        </Button>
         <form onSubmit={handleSubmit}>
           <TextField
             name="author"
@@ -126,19 +134,15 @@ const CreatePost = () => {
           </Button>
         </form>
       </div>
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={6000}
-        onClose={handleCloseSnackbar}
-      >
+      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleCloseSnackbar}>
         <div>
-        <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity}>
-          {snackbarMessage}
-        </Alert>
+          <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity}>
+            {snackbarMessage}
+          </Alert>
         </div>
       </Snackbar>
     </Container>
-  );
-};
+  )
+}
 
-export default CreatePost;
+export default CreatePost

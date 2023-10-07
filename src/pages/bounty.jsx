@@ -13,6 +13,7 @@ import axios from 'axios'
 import { Snackbar } from '@mui/material'
 import MuiAlert from '@mui/material/Alert'
 import { useRouter } from 'next/router'; 
+import Button from '@mui/material/Button';
 
 const Alert = (props) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />
@@ -86,8 +87,10 @@ const Bounty = () => {
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
       <h1 style={{ textAlign: 'center', fontSize: '24px', fontWeight: 'bold', color: '#333' }}>Challenges</h1>
-      <button onClick={handleLogout}>Logout</button>
-      {postData.map((post, index) => {
+      <Button variant="contained" color="primary" onClick={handleLogout}>
+      Logout
+    </Button>
+      {postData.slice().reverse().map((post, index) => {
         // Generate a random index within the length of the colors array
         const randomIndex = index % colors.length
         const randomColor = colors[randomIndex]
