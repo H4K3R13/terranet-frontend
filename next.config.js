@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
 }
 
-module.exports = nextConfig
+// module.exports = nextConfig
 // // next.config.js
 // const withCSS = require('@zeit/next-css')
 // const withTM = require('next-transpile-modules')(['@material-ui/core'])
@@ -18,3 +18,20 @@ module.exports = nextConfig
 //     },
 //   })
 // )
+module.exports = {
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.(mp4|webm)$/,
+      use: {
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]', // You can customize the output filename here
+          publicPath: '/_next/static/', // Specify the public path for the output file
+          outputPath: 'static/', // Specify the output directory
+        },
+      },
+    });
+
+    return config;
+  },
+};
