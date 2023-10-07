@@ -63,7 +63,7 @@ const Bounty = () => {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API}api/interested`, data)
       if (response.status === 200) {
         console.log('Post created successfully:', response.data)
-        setSnackbarMessage('Sponser is notified')
+        setSnackbarMessage('Sponser Is Notified')
         setSnackbarSeverity('success')
         setSnackbarOpen(true)
       }
