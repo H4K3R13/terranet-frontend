@@ -1,28 +1,69 @@
 import React, { useState } from 'react'
 import { TextField, Button, Grid, Typography, Paper, RadioGroup, Radio, FormControlLabel } from '@mui/material'
 // import imageSrc from '../../public/images/signup-image.jpg' // Replace with the correct absolute path
+import axios from 'axios'
+import { Snackbar } from '@mui/material'
+import MuiAlert from '@mui/material/Alert'
+import { useRouter } from 'next/router'; 
+
+const Alert = (props) => {
+  return <MuiAlert elevation={6} variant="filled" {...props} />
+}
 
 const Login = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     role: 'sponsor', // Default role, you can set it to 'bounty_hunter' if needed.
   })
 
+
+  const [snackbarOpen, setSnackbarOpen] = useState(false)
+  const [snackbarMessage, setSnackbarMessage] = useState('')
+  const [snackbarSeverity, setSnackbarSeverity] = useState('success')
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false)
+  }
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    // You can add login logic here, such as sending the data to a server.
-    // Example:
-    console.log(formData)
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API}api/login`, {
+        email: formData.email,
+        password: formData.password,
+        user_type: formData.role === 'sponsor' ? 'Sponsor' : 'Bounty Hunter',
+      });
+      console.log('Login successful:', response.data);
+      setSnackbarMessage('Login Successfull')
+      setSnackbarSeverity('success')
+      setSnackbarOpen(true)
 
-  const handleSponsor = () => {
-    router.push('/bounty')
-  }
+      localStorage.setItem("user",response.data.user.first_name)
+      setTimeout(() => {
+        if (response.data.user.user_type === 'Bounty Hunter') {
+          router.push('/bounty');
+        } else if (response.data.user.user_type === 'Sponsor') {
+          router.push('/sponsor');
+        }
+      }, 2000);
+      // You can handle success (e.g., redirect) here
+    } catch (error) {
+      console.error('Error during login:', error);
+      setSnackbarMessage('Something Went Wrong')
+      setSnackbarSeverity('error')
+      setSnackbarOpen(true)
+      // You can handle errors here
+    }
+  };
+  
+
+
 
   return (
     <Grid container justifyContent="center" alignItems="center" style={{ minHeight: '100vh' }}>
@@ -83,6 +124,13 @@ const Login = () => {
           </form>
         </Paper>
       </Grid>
+      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <div>
+          <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity}>
+            {snackbarMessage}
+          </Alert>
+        </div>
+      </Snackbar>
     </Grid>
   )
 }

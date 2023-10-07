@@ -8,7 +8,7 @@ import { Link as ScrollLink } from 'react-scroll'
 import { StyledButton } from '@/components/styled-button'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 // import { useRouter } from 'next/router' // Import the useRouter hook
-import Vid from './videoBg.mp4'
+// import Vid from './videoBg.mp4'
 interface Exp {
   label: string
   value: string
@@ -64,7 +64,7 @@ const HomeHero: FC = () => {
         },
       }}
     >
-    <video
+    {/* <video
     autoPlay
     loop
     muted
@@ -79,7 +79,7 @@ const HomeHero: FC = () => {
   >
     <source src={Vid} type="video/mp4" />
     Your browser does not support the video tag.
-  </video>
+  </video> */}
       <Container maxWidth="lg">
      
         <Grid container spacing={0} sx={{ flexDirection: { xs: 'column', md: 'unset' } }}>

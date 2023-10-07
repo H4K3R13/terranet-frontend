@@ -1,7 +1,12 @@
 import React, { useState } from 'react'
 import { TextField, Button, Grid, Typography, Paper, RadioGroup, Radio, FormControlLabel } from '@mui/material'
-
+import axios from 'axios'
+import { Snackbar } from '@mui/material'
+import MuiAlert from '@mui/material/Alert'
 // import imageSrc from '../../public/images/signup-image.jpg' // Replace with the correct absolute path
+const Alert = (props) => {
+  return <MuiAlert elevation={6} variant="filled" {...props} />
+}
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -13,16 +18,42 @@ const Register = () => {
     role: 'sponsor', // Default role, you can set it to 'bounty_hunter' if needed.
   })
 
+  const [snackbarOpen, setSnackbarOpen] = useState(false)
+  const [snackbarMessage, setSnackbarMessage] = useState('')
+  const [snackbarSeverity, setSnackbarSeverity] = useState('success')
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false)
+  }
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    // You can add registration logic here, such as sending the data to a server.
-    // Example:
-    console.log(formData)
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API}api/register`, {
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        email: formData.email,
+        password: formData.password,
+        user_type: formData.role === 'sponsor' ? 'Sponsor' : 'Bounty Hunter',
+      });
+      console.log('Registration successful:', response.data);
+      setSnackbarMessage('Registration Successfull')
+      setSnackbarSeverity('success')
+      setSnackbarOpen(true)
+      // You can handle success (e.g., redirect) here
+    } catch (error) {
+      console.error('Error during registration:', error);
+      setSnackbarMessage('Something Went Wrong')
+      setSnackbarSeverity('error')
+      setSnackbarOpen(true)
+      // You can handle errors here
+    }
+  };
+  
 
   return (
     <Grid container justifyContent="center" alignItems="center" style={{ minHeight: '100vh' }} >
@@ -122,6 +153,13 @@ const Register = () => {
           </form>
         </Paper>
       </Grid>
+      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <div>
+          <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity}>
+            {snackbarMessage}
+          </Alert>
+        </div>
+      </Snackbar>
     </Grid>
   )
 }
