@@ -10,10 +10,24 @@ import ShareIcon from '@mui/icons-material/Share'
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee'
 import Avatar from '@mui/material/Avatar'
 import axios from 'axios'
+import { Snackbar } from '@mui/material'
+import MuiAlert from '@mui/material/Alert'
+
+const Alert = (props) => {
+  return <MuiAlert elevation={6} variant="filled" {...props} />
+}
 
 const Bounty = () => {
   const [postData, setPostData] = useState([])
   const [interestMap, setInterestMap] = useState({}) // Store interest state for each post
+
+  const [snackbarOpen, setSnackbarOpen] = useState(false)
+  const [snackbarMessage, setSnackbarMessage] = useState('')
+  const [snackbarSeverity, setSnackbarSeverity] = useState('success')
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false)
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,12 +47,32 @@ const Bounty = () => {
     fetchData()
   }, [])
 
-  const handleInterest = (postId) => {
+  const handleInterest = async (postId, postTitle, postAuthor) => {
     setInterestMap((prevMap) => {
       const updatedMap = { ...prevMap }
       updatedMap[postId] = !prevMap[postId] // Toggle interest for the specific post
       return updatedMap
     })
+    const data = {
+      title: postTitle,
+      username: 'Amal',
+      sponsor_name: postAuthor,
+    }
+    console.log(data)
+    try {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API}api/interested`, data)
+      if (response.status === 200) {
+        console.log('Post created successfully:', response.data)
+        setSnackbarMessage('Sponser is notified')
+        setSnackbarSeverity('success')
+        setSnackbarOpen(true)
+      }
+    } catch (error) {
+      console.error('Error creating post:', error)
+      setSnackbarMessage('Something Went Wrong')
+      setSnackbarSeverity('error')
+      setSnackbarOpen(true)
+    }
   }
   const colors = ['#FF5733', '#FFBD33', '#B8FF33', '#33FF57', '#33FFBD', '#3333FF', '#BD33FF', '#FF33BD']
 
@@ -64,11 +98,14 @@ const Bounty = () => {
               <Typography variant="body2" color="text.secondary">
                 {post.description}
                 <br />
-                <CurrencyRupeeIcon /> {post.reward}
+                <CurrencyRupeeIcon /> <h3></h3>
               </Typography>
             </CardContent>
             <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '10px' }}>
-              <IconButton aria-label="add to favorites" onClick={() => handleInterest(post.id)}>
+              <IconButton
+                aria-label="add to favorites"
+                onClick={() => handleInterest(post.id, post.title, post.sponsor_name)}
+              >
                 <FavoriteIcon style={{ color: interestMap[post.id] ? 'red' : 'gray' }} />
               </IconButton>
               <IconButton aria-label="share">
@@ -78,6 +115,14 @@ const Bounty = () => {
           </Card>
         )
       })}
+
+      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <div>
+          <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity}>
+            {snackbarMessage}
+          </Alert>
+        </div>
+      </Snackbar>
     </div>
   )
 }
