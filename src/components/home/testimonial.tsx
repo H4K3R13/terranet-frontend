@@ -78,7 +78,7 @@ const HomeTestimonial: FC = () => {
                 fontWeight: 'bold',
               }}
             >
-              What our alumni say{' '}
+              Voices of Support{' '}
               {/* <Typography
                 component="mark"
                 sx={{

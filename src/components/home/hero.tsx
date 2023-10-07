@@ -7,8 +7,8 @@ import Typography from '@mui/material/Typography'
 import { Link as ScrollLink } from 'react-scroll'
 import { StyledButton } from '@/components/styled-button'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
-import { useRouter } from 'next/router' // Import the useRouter hook
-
+// import { useRouter } from 'next/router' // Import the useRouter hook
+import Vid from './videoBg.mp4'
 interface Exp {
   label: string
   value: string
@@ -34,16 +34,13 @@ const ExpItem: FC<ExpItemProps> = ({ item }) => {
 }
 
 const HomeHero: FC = () => {
-  const router = useRouter()
-  const handleMemberRegisterClick = () => {
-    // Use the router to navigate to the "Regsiter" page
-    router.push('/register')
-  }
+
+
   return (
     <Box
       id="hero"
       sx={{
-        backgroundImage: `url('/images/nehru.jpeg')`,
+        // backgroundImage: `url('/images/homeimg.jpg')`,
         backgroundSize: 'cover', // Cover the entire box
         backgroundAttachment: 'fixed', // Fixed background position
         backgroundColor: '#eeeeee',
@@ -59,7 +56,7 @@ const HomeHero: FC = () => {
           left: 0,
           width: '100%',
           height: '100%',
-          // backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
           zIndex: 0,
 
           // Adjust the opacity as needed
@@ -67,7 +64,24 @@ const HomeHero: FC = () => {
         },
       }}
     >
+    <video
+    autoPlay
+    loop
+    muted
+    playsInline
+    style={{
+      position: 'absolute',
+      width: '100%', // Set width to screen width
+      height: '100%', // Set height to screen height
+      objectFit: 'cover',
+      zIndex: -1, // Place video behind other content
+    }}
+  >
+    <source src={Vid} type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
       <Container maxWidth="lg">
+     
         <Grid container spacing={0} sx={{ flexDirection: { xs: 'column', md: 'unset' } }}>
           <Grid item xs={12} md={7}>
             <Box
@@ -119,9 +133,9 @@ const HomeHero: FC = () => {
                 </Typography>
               </Box>
               <Box sx={{ mb: 4, width: { xs: '100%', md: '70%' } }}>
-                <Typography sx={{ color: 'text.secondary', lineHeight: 1.6 }}>
+                <Typography sx={{ color: '#000', lineHeight: 1.6 }}>
                   {
-                    'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.'
+                    'Our vision is to foster a world where every individual  actions, no matter how small, contribute to meaningful global change. We aspire to create a digital platform that empowers people to make a positive impact by completing diverse tasks while offering NGOs the resources they need to drive essential projects forward. Through collaboration, transparency, and a dynamic rewards system, we aim to build a community dedicated to addressing pressing global challenges. Together, we envision a brighter, more sustainable future for all.'
                   }
                 </Typography>
               </Box>

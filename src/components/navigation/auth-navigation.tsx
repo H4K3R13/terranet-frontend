@@ -5,14 +5,20 @@ import { useRouter } from 'next/router' // Import the useRouter hook
 const AuthNavigation: FC = () => {
   const router = useRouter()
 
-  const handleMemberLoginClick = () => {
+  const handleSignupClick = () => {
+    // Use the router to navigate to the "Login" page
+    router.push('/register')
+  }
+  const handleSigninClick = () => {
     // Use the router to navigate to the "Login" page
     router.push('/login')
   }
   return (
     <Box sx={{ '& button:first-child': { mr: 2 } }}>
-      <StyledButton variant="outlined">Sign In</StyledButton>
-      <StyledButton onClick={handleMemberLoginClick}>Sign up</StyledButton>
+      <StyledButton onClick={handleSigninClick} variant="outlined">
+        Sign In
+      </StyledButton>
+      <StyledButton onClick={handleSignupClick}>Sign up</StyledButton>
     </Box>
   )
 }
