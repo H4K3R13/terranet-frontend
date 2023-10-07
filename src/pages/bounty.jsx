@@ -98,7 +98,8 @@ const Bounty = () => {
               <Typography variant="body2" color="text.secondary">
                 {post.description}
                 <br />
-                <CurrencyRupeeIcon /> <h3></h3>
+                <CurrencyRupeeIcon style={{ fontSize: 'inherit', verticalAlign: 'middle' }} />
+                <span style={{ verticalAlign: 'middle', marginLeft: '5px' }}>{post.reward}</span>
               </Typography>
             </CardContent>
             <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '10px' }}>
