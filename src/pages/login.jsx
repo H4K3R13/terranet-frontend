@@ -51,6 +51,10 @@ function LoginForm() {
     }
   }
 
+  const handleSponsor = () => {
+    router.push('/bounty')
+  }
+
   return (
     <div>
       <Navbar />
@@ -108,6 +112,7 @@ function LoginForm() {
               >
                 Log in
               </button>
+              <button onClick={handleSponsor}>Sponsor</button>
             </div>
           </form>
         </div>
