@@ -12,20 +12,20 @@ import Avatar from '@mui/material/Avatar'
 import axios from 'axios'
 import { Snackbar } from '@mui/material'
 import MuiAlert from '@mui/material/Alert'
-import { useRouter } from 'next/router'; 
-import Button from '@mui/material/Button';
+import { useRouter } from 'next/router'
+import Button from '@mui/material/Button'
 
 const Alert = (props) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />
 }
 
 const Bounty = () => {
-  const savedUser = localStorage.getItem("user")
-  const parsedUserData = JSON.parse(savedUser);
+  const savedUser = localStorage.getItem('user')
+  const parsedUserData = JSON.parse(savedUser)
   const name = parsedUserData.first_name
   const email = parsedUserData.email
 
-  const router = useRouter();
+  const router = useRouter()
   const [postData, setPostData] = useState([])
   const [interestMap, setInterestMap] = useState({}) // Store interest state for each post
 
@@ -56,7 +56,7 @@ const Bounty = () => {
   }, [])
 
   const handleLogout = () => {
-    router.push("/")
+    router.push('/')
   }
 
   const handleInterest = async (postId, postTitle, postAuthor) => {
@@ -90,47 +90,55 @@ const Bounty = () => {
 
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleLogout}
+        style={{ position: 'absolute', top: '10px', right: '10px' }}
+      >
+        Logout
+      </Button>
       <h1 style={{ textAlign: 'center', fontSize: '24px', fontWeight: 'bold', color: '#333' }}>Challenges</h1>
-      <Button variant="contained" color="primary" onClick={handleLogout}>
-      Logout
-    </Button>
-      {postData.slice().reverse().map((post, index) => {
-        // Generate a random index within the length of the colors array
-        const randomIndex = index % colors.length
-        const randomColor = colors[randomIndex]
-        return (
-          <Card key={post.id} sx={{ marginBottom: '20px', borderRadius: '20px' }}>
-            <CardHeader
-              avatar={
-                <Avatar sx={{ bgcolor: randomColor }} aria-label="recipe">
-                  {post.sponsor_name.charAt(0).toUpperCase()}
-                </Avatar>
-              }
-              title={post.sponsor_name}
-              subheader={post.created_at}
-            />
-            <CardContent>
-              <Typography variant="body2" color="text.secondary">
-                {post.description}
-                <br />
-                <CurrencyRupeeIcon style={{ fontSize: 'inherit', verticalAlign: 'middle' }} />
-                <span style={{ verticalAlign: 'middle', marginLeft: '5px' }}>{post.reward}</span>
-              </Typography>
-            </CardContent>
-            <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '10px' }}>
-              <IconButton
-                aria-label="add to favorites"
-                onClick={() => handleInterest(post.id, post.title, post.sponsor_name)}
-              >
-                <FavoriteIcon style={{ color: interestMap[post.id] ? 'red' : 'gray' }} />
-              </IconButton>
-              <IconButton aria-label="share">
-                <ShareIcon />
-              </IconButton>
-            </div>
-          </Card>
-        )
-      })}
+      {postData
+        .slice()
+        .reverse()
+        .map((post, index) => {
+          // Generate a random index within the length of the colors array
+          const randomIndex = index % colors.length
+          const randomColor = colors[randomIndex]
+          return (
+            <Card key={post.id} sx={{ marginBottom: '20px', borderRadius: '20px' }}>
+              <CardHeader
+                avatar={
+                  <Avatar sx={{ bgcolor: randomColor }} aria-label="recipe">
+                    {post.sponsor_name.charAt(0).toUpperCase()}
+                  </Avatar>
+                }
+                title={post.sponsor_name}
+                subheader={post.created_at}
+              />
+              <CardContent>
+                <Typography variant="body2" color="text.secondary">
+                  {post.description}
+                  <br />
+                  <CurrencyRupeeIcon style={{ fontSize: 'inherit', verticalAlign: 'middle' }} />
+                  <span style={{ verticalAlign: 'middle', marginLeft: '5px' }}>{post.reward}</span>
+                </Typography>
+              </CardContent>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '10px' }}>
+                <IconButton
+                  aria-label="add to favorites"
+                  onClick={() => handleInterest(post.id, post.title, post.sponsor_name)}
+                >
+                  <FavoriteIcon style={{ color: interestMap[post.id] ? 'red' : 'gray' }} />
+                </IconButton>
+                <IconButton aria-label="share">
+                  <ShareIcon />
+                </IconButton>
+              </div>
+            </Card>
+          )
+        })}
 
       <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleCloseSnackbar}>
         <div>
