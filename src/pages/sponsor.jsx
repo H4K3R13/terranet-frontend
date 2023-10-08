@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Container, TextField, Button, Snackbar } from '@mui/material'
+import { Container, TextField, Button, Snackbar,  Paper, Grid, Typography } from '@mui/material'
 import MuiAlert from '@mui/material/Alert'
 import axios from 'axios'
 import { useRouter } from 'next/router'
@@ -9,10 +9,16 @@ const Alert = (props) => {
 }
 
 const CreatePost = () => {
+  const savedUser = localStorage.getItem("user")
+  const parsedUserData = JSON.parse(savedUser);
+  const name = parsedUserData.first_name
+  const email = parsedUserData.email
+
+  console.log(email, name)  
   const router = useRouter()
   const [postData, setPostData] = useState({
-    author: '',
-    sponsor_name: '',
+    author: email,
+    sponsor_name: name,
     title: '',
     description: '',
     reward: '',
@@ -64,12 +70,26 @@ const CreatePost = () => {
   }
 
   return (
-    <Container maxWidth="sm">
-      <div>
-        <h2>Create a Post</h2>
-        <Button variant="contained" color="primary" onClick={handleLogout}>
-          Logout
-        </Button>
+    <div style={{ padding: '20px' }}>
+     <Button
+        variant="contained"
+        color="primary"
+        onClick={handleLogout}
+        style={{ position: 'absolute', top: '10px', right: '10px' }}
+      >
+        Logout
+      </Button>
+
+      <Container maxWidth="sm">
+        <Paper style={{ padding: '20px', marginTop: '70px', width: '100%' , position:"left" }}>
+          <Grid container spacing={2} alignItems="center">
+            <Grid item xs={12}>
+              <Typography variant="h4" align="center" gutterBottom>
+                Create a Post
+              </Typography>
+            </Grid>
+            {/* Other fields ... */}
+          </Grid>
         <form onSubmit={handleSubmit}>
           <TextField
             name="author"
@@ -133,15 +153,20 @@ const CreatePost = () => {
             Create Post
           </Button>
         </form>
-      </div>
-      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleCloseSnackbar}>
-        <div>
-          <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity}>
-            {snackbarMessage}
-          </Alert>
-        </div>
-      </Snackbar>
+        <Snackbar
+          open={snackbarOpen}
+          autoHideDuration={6000}
+          onClose={handleCloseSnackbar}
+        >
+          <div>
+            <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity}>
+              {snackbarMessage}
+            </Alert>
+          </div>
+        </Snackbar>
+      </Paper>
     </Container>
+    </div>
   )
 }
 

@@ -52,7 +52,7 @@ const Login = () => {
       setSnackbarSeverity('success');
       setSnackbarOpen(true);
 
-      localStorage.setItem('user', response.data.user.first_name);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
       setTimeout(() => {
         if (response.data.user.user_type === 'Bounty Hunter') {
           router.push('/bounty');
