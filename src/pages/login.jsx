@@ -1,35 +1,43 @@
-import React, { useState } from 'react'
-import { TextField, Button, Grid, Typography, Paper, RadioGroup, Radio, FormControlLabel } from '@mui/material'
-// import imageSrc from '../../public/images/signup-image.jpg' // Replace with the correct absolute path
-import axios from 'axios'
-import { Snackbar } from '@mui/material'
-import MuiAlert from '@mui/material/Alert'
-import { useRouter } from 'next/router'; 
+import React, { useState } from 'react';
+import { Radio, RadioGroup, FormControlLabel, FormControl, FormLabel, Button, Grid, Paper, Typography, TextField } from '@mui/material';
+import axios from 'axios';
+import { Snackbar } from '@mui/material';
+import MuiAlert from '@mui/material/Alert';
+import { useRouter } from 'next/router';
 
 const Alert = (props) => {
-  return <MuiAlert elevation={6} variant="filled" {...props} />
-}
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+};
 
 const Login = () => {
   const router = useRouter();
+  const [userType, setUserType] = useState(''); // State to store selected user type
+
+  const handleUserTypeChange = (event) => {
+    const selectedUserType = event.target.value;
+    setUserType(selectedUserType);
+  
+    // Update the role in the form data based on the selected user type
+    setFormData({ ...formData, role: selectedUserType });
+  };
+  
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    role: 'sponsor', // Default role, you can set it to 'bounty_hunter' if needed.
-  })
+    role: '', // Default role, you can set it to 'bounty_hunter' if needed.
+  });
 
-
-  const [snackbarOpen, setSnackbarOpen] = useState(false)
-  const [snackbarMessage, setSnackbarMessage] = useState('')
-  const [snackbarSeverity, setSnackbarSeverity] = useState('success')
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState('success');
 
   const handleCloseSnackbar = () => {
-    setSnackbarOpen(false)
-  }
+    setSnackbarOpen(false);
+  };
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,11 +48,11 @@ const Login = () => {
         user_type: formData.role === 'sponsor' ? 'Sponsor' : 'Bounty Hunter',
       });
       console.log('Login successful:', response.data);
-      setSnackbarMessage('Login Successfull')
-      setSnackbarSeverity('success')
-      setSnackbarOpen(true)
+      setSnackbarMessage('Login Successfull');
+      setSnackbarSeverity('success');
+      setSnackbarOpen(true);
 
-      localStorage.setItem("user",response.data.user.first_name)
+      localStorage.setItem('user', response.data.user.first_name);
       setTimeout(() => {
         if (response.data.user.user_type === 'Bounty Hunter') {
           router.push('/bounty');
@@ -52,25 +60,21 @@ const Login = () => {
           router.push('/sponsor');
         }
       }, 2000);
-      // You can handle success (e.g., redirect) here
     } catch (error) {
       console.error('Error during login:', error);
-      setSnackbarMessage('Something Went Wrong')
-      setSnackbarSeverity('error')
-      setSnackbarOpen(true)
-      // You can handle errors here
+      setSnackbarMessage('Something Went Wrong');
+      setSnackbarSeverity('error');
+      setSnackbarOpen(true);
     }
   };
-  
-
-
 
   return (
-    <Grid container justifyContent="center" alignItems="center" style={{ minHeight: '100vh' }}>
-      <Grid item xs={12} sm={10} md={8} lg={2}>
-        {/* Image on the left */}
-        {/* <img src={imageSrc} alt="Image" style={{ width: '200px', margin: '80px 370px 20px 100px' }} /> */}
-      </Grid>
+    <Grid
+      container
+      justifyContent="center"
+      alignItems="center"
+      style={{ minHeight: '100vh', padding: '20px' }}
+    >
       <Grid item xs={12} sm={10} md={3} lg={3}>
         <Paper
           elevation={3}
@@ -93,7 +97,6 @@ const Login = () => {
                 style: { borderRadius: '10px' },
               }}
             />
-
             <TextField
               label="Password"
               fullWidth
@@ -107,17 +110,19 @@ const Login = () => {
                 style: { borderRadius: '10px' },
               }}
             />
-            <RadioGroup
-              marginleft="80px"
-              aria-label="Role"
-              name="role"
-              value={formData.role}
-              onChange={handleChange}
-              style={{ marginTop: '10px', display: 'flex', flexDirection: 'row', marginLeft: '130px' }}
-            >
-              <FormControlLabel value="sponsor" control={<Radio />} label="Sponsor" />
-              <FormControlLabel value="bounty_hunter" control={<Radio />} label="Bounty Hunter" />
-            </RadioGroup>
+           <FormControl component="fieldset">
+        <FormLabel component="legend">Select User Type</FormLabel>
+        <RadioGroup
+          aria-label="user-type"
+          name="user-type"
+          value={formData.role}  // Use formData.role instead of userType
+          onChange={handleUserTypeChange}  // Use handleUserTypeChange to update userType and role
+          style={{ marginTop: '10px' }}
+        >
+          <FormControlLabel value="sponsor" control={<Radio />} label="Sponsor" />
+          <FormControlLabel value="bounty_hunter" control={<Radio />} label="Bounty Hunter" />
+        </RadioGroup>
+      </FormControl><br/>
             <Button type="submit" variant="contained" color="primary">
               Login
             </Button>
@@ -132,7 +137,7 @@ const Login = () => {
         </div>
       </Snackbar>
     </Grid>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
