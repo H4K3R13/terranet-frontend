@@ -99,6 +99,7 @@ const Bounty = () => {
         Logout
       </Button>
       <h1 style={{ textAlign: 'center', fontSize: '24px', fontWeight: 'bold', color: '#333' }}>Challenges</h1>
+
       {postData
         .slice()
         .reverse()
