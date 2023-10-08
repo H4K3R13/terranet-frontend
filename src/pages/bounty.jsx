@@ -12,12 +12,20 @@ import Avatar from '@mui/material/Avatar'
 import axios from 'axios'
 import { Snackbar } from '@mui/material'
 import MuiAlert from '@mui/material/Alert'
+import { useRouter } from 'next/router'; 
+import Button from '@mui/material/Button';
 
 const Alert = (props) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />
 }
 
 const Bounty = () => {
+  const savedUser = localStorage.getItem("user")
+  const parsedUserData = JSON.parse(savedUser);
+  const name = parsedUserData.first_name
+  const email = parsedUserData.email
+
+  const router = useRouter();
   const [postData, setPostData] = useState([])
   const [interestMap, setInterestMap] = useState({}) // Store interest state for each post
 
@@ -47,6 +55,10 @@ const Bounty = () => {
     fetchData()
   }, [])
 
+  const handleLogout = () => {
+    router.push("/")
+  }
+
   const handleInterest = async (postId, postTitle, postAuthor) => {
     setInterestMap((prevMap) => {
       const updatedMap = { ...prevMap }
@@ -55,7 +67,7 @@ const Bounty = () => {
     })
     const data = {
       title: postTitle,
-      username: 'Amal',
+      username: email,
       sponsor_name: postAuthor,
     }
     console.log(data)
@@ -79,7 +91,10 @@ const Bounty = () => {
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
       <h1 style={{ textAlign: 'center', fontSize: '24px', fontWeight: 'bold', color: '#333' }}>Challenges</h1>
-      {postData.map((post, index) => {
+      <Button variant="contained" color="primary" onClick={handleLogout}>
+      Logout
+    </Button>
+      {postData.slice().reverse().map((post, index) => {
         // Generate a random index within the length of the colors array
         const randomIndex = index % colors.length
         const randomColor = colors[randomIndex]
