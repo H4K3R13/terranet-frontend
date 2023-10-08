@@ -20,6 +20,11 @@ const Alert = (props) => {
 }
 
 const Bounty = () => {
+  const savedUser = localStorage.getItem("user")
+  const parsedUserData = JSON.parse(savedUser);
+  const name = parsedUserData.first_name
+  const email = parsedUserData.email
+
   const router = useRouter();
   const [postData, setPostData] = useState([])
   const [interestMap, setInterestMap] = useState({}) // Store interest state for each post
@@ -60,7 +65,6 @@ const Bounty = () => {
       updatedMap[postId] = !prevMap[postId] // Toggle interest for the specific post
       return updatedMap
     })
-    const email = localStorage.getItem("user")
     const data = {
       title: postTitle,
       username: email,
