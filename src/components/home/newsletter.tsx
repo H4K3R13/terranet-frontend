@@ -1,27 +1,47 @@
-import React, { FC } from 'react'
+import React, { useState, FC } from 'react'
 import Box from '@mui/material/Box'
 import InputBase from '@mui/material/InputBase'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
-import { StyledButton } from '../styled-button'
+import { StyledButton } from '../styled-button' // Assuming your StyledButton component is imported correctly
+
+import Snackbar from '@mui/material/Snackbar'
+import MuiAlert from '@mui/material/Alert'
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />
+}
 
 const HomeNewsLetter: FC = () => {
+  const [open, setOpen] = useState(false)
+
+  const handleClick = () => {
+    setOpen(true)
+  }
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return
+    }
+    setOpen(false)
+  }
+
   return (
-    <Box sx={{ backgroundColor: 'background.paper', py: { xs: 8, md: 10 } }}>
+    <Box sx={{ backgroundColor: 'background.paper', py: { xs: 8, md: 4 } }}>
       <Container>
         <Box
           sx={{
             backgroundColor: 'secondary.main',
             borderRadius: 10,
-            py: { xs: 4, md: 10 },
-            px: { xs: 4, md: 8 },
+            py: { xs: 4, md: 4 },
+            px: { xs: 4, md: 6 },
             textAlign: 'center',
           }}
         >
           <Typography variant="h1" component="h2" sx={{ mb: 1, fontSize: { xs: 32, md: 42 } }}>
-            Subscribe to Our News Letter
+            Subscribe
           </Typography>
-          <Typography sx={{ mb: 6 }}>Subscribe to our newsletter to get information about our courses.</Typography>
+          <Typography sx={{ mb: 6 }}>Subscribe to our newsletter to get in touch with us.</Typography>
 
           <Box
             sx={{
@@ -46,9 +66,16 @@ const HomeNewsLetter: FC = () => {
               placeholder="Enter your Email Address"
             />
             <Box>
-              <StyledButton disableHoverEffect size="large">
+              <StyledButton disableHoverEffect size="large" onClick={handleClick}>
                 Subscribe
               </StyledButton>
+              <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+                <div>
+                  <Alert onClose={handleClose} severity="success">
+                    Subscribed
+                  </Alert>
+                </div>
+              </Snackbar>
             </Box>
           </Box>
         </Box>

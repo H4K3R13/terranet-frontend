@@ -3,11 +3,11 @@ import type { Mentor } from '@/interfaces/mentor'
 export const data: Array<Mentor> = [
   {
     id: 1,
-    photo: '/images/mentors/christian-buehner-DItYlc26zVI-unsplash.jpg',
-    name: 'Event1 ',
+    photo: '/images/mentors/b1.jpg',
+    name: 'Transforming a Neglected Park ',
     category: 'UI/UX Design',
     description:
-      'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      'I am Sam, a Thrikkakara resident. Our once-neglected central park faced decay, but volunteers united to revive it. With Terranets support, transforming our neighborhood into a cleaner, greener, and more vibrant community.',
 
     company: {
       name: '',
@@ -16,11 +16,11 @@ export const data: Array<Mentor> = [
   },
   {
     id: 2,
-    photo: '/images/mentors/jonas-kakaroto-KIPqvvTOC1s-unsplash.jpg',
-    name: 'Event2',
+    photo: '/images/mentors/b2.jpg',
+    name: 'Unity in Agriculture',
     category: 'Machine Learning',
     description:
-      'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      'Maya shares a harrowing tale of a flood and landslide that trapped her town. Brave volunteers arrived, saving lives, offering hope, and inspiring resilience through selfless dedication and hard work.',
     company: {
       name: 'Google',
       logo: '/images/companies/google.png',
@@ -28,11 +28,11 @@ export const data: Array<Mentor> = [
   },
   {
     id: 3,
-    photo: '/images/mentors/noah-buscher-8A7fD6Y5VF8-unsplash.jpg',
-    name: 'Event3',
+    photo: '/images/mentors/b3.jpg',
+    name: 'Empowering the Unemployed',
     category: 'Android Development',
     description:
-      'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      'Vimal, a job seeker, discovered Terranets call for unemployed graduates to teach underprivileged students. He and friends formed a passionate teachers community, dedicating themselves to educating and empowering youngsters.',
     company: {
       name: 'Airbnb',
       logo: '/images/companies/airbnb.png',
@@ -40,11 +40,11 @@ export const data: Array<Mentor> = [
   },
   {
     id: 4,
-    photo: '/images/mentors/philip-martin-5aGUyCW_PJw-unsplash.jpg',
-    name: 'Event4',
+    photo: '/images/mentors/b4.jpg',
+    name: ' How Terranet Empowered Farmers',
     category: 'Fullstack Development',
     description:
-      'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      'Thomas, a traditional farmer, united with Terranets agriculture-savvy volunteers. They formed a cooperative, and shared knowledge, fostering food security, environmental protection, and community unity.',
     company: {
       name: 'Microsoft',
       logo: '/images/companies/microsoft.png',

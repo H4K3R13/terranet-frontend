@@ -82,7 +82,7 @@ const HomeOurMentors: FC = () => {
       sx={{
         pt: {
           xs: 6,
-          md: 8,
+          md: 0,
         },
         pb: {
           xs: 8,
@@ -93,7 +93,7 @@ const HomeOurMentors: FC = () => {
     >
       <Container maxWidth="lg">
         <Typography variant="h1" sx={{ fontSize: 40 }}>
-          Success stories
+          Blogs
         </Typography>
 
         <Slider {...sliderConfig}>
