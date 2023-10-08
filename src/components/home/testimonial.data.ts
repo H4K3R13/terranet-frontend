@@ -3,7 +3,7 @@ import type { Testimonial } from '@/interfaces/testimonial'
 export const data: Array<Testimonial> = [
   {
     id: 1,
-    title: 'Lorem ipsum dolor',
+    title: 'Empowering!',
     content:
       'I ve always wanted to contribute to making the world a better place, but finding the right opportunities was a challenge. This platform changed everything. It offers a wide range of tasks that align with my interests, and the rewards system keeps me motivated. Its empowering to know that my actions are making a positive impact on global issues.',
     user: {
@@ -15,7 +15,7 @@ export const data: Array<Testimonial> = [
   },
   {
     id: 2,
-    title: 'Lorem ipsum dolor',
+    title: 'Support',
     content:
       'As a non-profit organization, we often struggle to find the necessary support for our projects. This platform has been a game-changer for us. We can showcase our missions and achievements to a community of engaged users who genuinely care about our cause. The transparency and trust it fosters have helped us raise the funds needed to drive our impactful projects forward.',
     user: {
@@ -27,7 +27,7 @@ export const data: Array<Testimonial> = [
   },
   {
     id: 3,
-    title: 'Lorem ipsum dolor',
+    title: 'Dedication and Transparency',
     content:
       'Supporting this platform has been incredibly fulfilling. We can present meaningful challenges to the community and witness the dedication and passion with which users tackle them. The verification process ensures that our goals are met, and the transparency in impact reporting reassures us that our contributions are making a difference in addressing global challenges.',
     user: {
@@ -47,18 +47,6 @@ export const data: Array<Testimonial> = [
       name: 'Diana Jordan',
       professional: 'Sustainability Manager',
       photo: '4.jpg',
-    },
-  },
-  {
-    id: 5,
-    title: 'Lorem ipsum dolor',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    user: {
-      id: 1,
-      name: 'Ashley Graham',
-      professional: 'Community Organizer',
-      photo: '5.jpg',
     },
   },
 ]
